@@ -1,0 +1,23 @@
+{
+  "null": null,
+    "true": true,
+    "false": false,
+    "string": "string",
+    "integer": 123,
+  "float": 123.456,
+    "array": [
+    1,
+    2,
+    3
+    ],
+    "object": {
+    "a": 1,
+    "b": 2,
+    "c": 3,
+    "d": {
+      "e": 4,
+      "f": 5,
+      "g": 6
+    }
+    }
+}
