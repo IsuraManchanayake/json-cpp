@@ -191,13 +191,20 @@ void JsonParser::tokenize(std::istream &istream) {
                 next_token();
                 break;
             }
-            case '1': case '2': case '3': case '4': case '5': case '6': case '7': case '8': case '9': {  // Omit '0'
+            case '-': case '1': case '2': case '3': case '4': case '5': case '6': case '7': case '8': case '9': {  // Omit '0'
                 long integer_value = 0;
                 double float_value = 0;
                 bool is_float = false;
                 double ten_power = 0.1;
+                bool negative = false;
+                if(c == '-') {
+                    negative = true;
+                    next_token();
+
+                }
                 while(c == '.' || (c >= '0' && c <= '9')) {
                     if(c == '.') {
+                        assert(!is_float && "Multiple decimal points");
                         float_value = integer_value;
                         is_float = true;
                     } else {
@@ -212,11 +219,11 @@ void JsonParser::tokenize(std::istream &istream) {
                 }
                 if(is_float) {
                     Token token(TokenKind::Float);
-                    token.value = float_value;
+                    token.value = negative ? -float_value : float_value;
                     tokens.emplace_back(token);
                 } else {
                     Token token(TokenKind::Integer);
-                    token.value = integer_value;
+                    token.value = negative ? -integer_value : integer_value;
                     tokens.emplace_back(token);
                 }
                 break;
