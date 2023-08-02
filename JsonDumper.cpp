@@ -89,7 +89,7 @@ void JsonDumper::dump_json_value(std::ostream &os, const JsonValue *json_value, 
             size_t index = 0;
             for (auto &elem: std::get<std::vector<JsonValue *>>(json_value->value)) {
                 JsonDumper::indent(os, indent_spaces);
-                os << *elem;
+                JsonDumper::dump_json_value(os, elem, indent_spaces);
                 if (index != std::get<std::vector<JsonValue *>>(json_value->value).size() - 1) {
                     os << ",\n";
                 }
