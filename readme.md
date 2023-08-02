@@ -29,3 +29,9 @@ Reads any C++ style input stream `istream` and returns a `Json *`. For example; 
 ### void JsonDumper::dump(std::ostream &os, const Json *json, size_t indent_spaces)
 
 Writes the `Json *` to a C++ style output stream `ostream`. For example; `std::ostringstream`, `std::ofstream`, `std::cout`.
+
+## Limitations
+
+- No support for unicode strings
+- No exception handling. It just exits when the Json is invalid xD. It's a simple fix, but I'm done with this project.
+- Never tested for performance

@@ -172,6 +172,24 @@ void JsonParser::tokenize(std::istream &istream) {
                                 case 'n':
                                     oss << '\n';
                                     break;
+                                case 'r':
+                                    oss << '\r';
+                                    break;
+                                case '\\':
+                                    oss << '\\';
+                                    break;
+                                case 't':
+                                    oss << '\t';
+                                    break;
+                                case 'b':
+                                    oss << '\b';
+                                    break;
+                                case 'f':
+                                    oss << '\f';
+                                    break;
+                                case '/':
+                                    oss << '/';
+                                    break;
                                 case '"':
                                     oss << '"';
                                     break;
