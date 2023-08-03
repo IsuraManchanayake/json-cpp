@@ -96,22 +96,12 @@ std::vector<Token> JsonParser::tokens;
 size_t JsonParser::token_ptr = 0;
 const Token *JsonParser::current_token = nullptr;
 
-Json *JsonParser::parse_file(const std::string &path) {
-    std::ifstream istream(path);
-    return parse_stream(istream);
-}
-
-Json *JsonParser::parse_string(const std::string &string) {
-    std::istringstream istream(string);
-    return parse_stream(istream);
-}
-
-Json *JsonParser::parse_stream(std::istream &istream) {
+Json *JsonParser::parse(std::istream &is) {
     JsonParser::tokens.clear();
     JsonParser::token_ptr = 0;
     JsonParser::current_token = nullptr;
 
-    tokenize(istream);
+    tokenize(is);
     auto *json = parse_json();
     for(const auto &token: tokens) {
         std::cout << token << ' ';
@@ -120,13 +110,13 @@ Json *JsonParser::parse_stream(std::istream &istream) {
     return json;
 }
 
-void JsonParser::tokenize(std::istream &istream) {
+void JsonParser::tokenize(std::istream &is) {
     size_t line_n = 0;
     size_t col_n = 0;
     char c;
-    auto next_token = [&]() { c = static_cast<char>(istream.get()); ++col_n; };
+    auto next_token = [&]() { c = static_cast<char>(is.get()); ++col_n; };
     next_token();
-    while(!istream.eof()) {
+    while(!is.eof()) {
         switch(c) {
             case '\n':
                 ++line_n;
@@ -223,7 +213,7 @@ void JsonParser::tokenize(std::istream &istream) {
                 while(c == '.' || (c >= '0' && c <= '9')) {
                     if(c == '.') {
                         assert(!is_float && "Multiple decimal points");
-                        float_value = integer_value;
+                        float_value = static_cast<double>(integer_value);
                         is_float = true;
                     } else {
                         if(is_float) {

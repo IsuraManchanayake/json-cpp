@@ -36,9 +36,7 @@ std::ostream& operator<<(std::ostream& os, const Token& token);
 std::ostream& operator<<(std::ostream& os, const TokenKind& token_type);
 
 struct JsonParser {
-    static Json *parse_file(const std::string &path);
-    static Json *parse_string(const std::string &string);
-    static Json *parse_stream(std::istream &istream);
+    static Json *parse(std::istream &istream);
 
 private:
     static void tokenize(std::istream &istream);
